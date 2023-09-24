@@ -3,12 +3,12 @@ package com.example.calculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
-import net.objecthunter.exp4j.Expression
 import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
+    val mathOp = findViewById<TextView>(R.id.math_operation)
+    val resText = findViewById<TextView>(R.id.result_text)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,8 +48,7 @@ class MainActivity : AppCompatActivity() {
         btnDot.setOnClickListener { setSymbol(".") }
 
         val btnAC = findViewById<TextView>(R.id.btn_ac)
-        val mathOp = findViewById<TextView>(R.id.math_operation)
-        val resText = findViewById<TextView>(R.id.result_text)
+
         btnAC.setOnClickListener {
             mathOp.text = ""
             resText.text = ""
@@ -79,9 +78,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     fun setSymbol(str: String) {
-        val mathOp = findViewById<TextView>(R.id.math_operation)
+        if (resText.text != "") {
+            mathOp.text = resText.text
+            resText.text = ""
+        }
         mathOp.append(str)
     }
 }
